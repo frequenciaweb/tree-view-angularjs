@@ -7,7 +7,8 @@ app.directive('treeView',
                 localNodes: '=model',
                 localClick: '&click',
                 max: '=?max',
-                nivel: '=?nivel'                         
+                nivel: '=?nivel',
+                liberarNiveis: "=?liberarNiveis"
             },
             link(scope, tElement, tAttrs, transclude, ngModel) {
 
@@ -18,11 +19,16 @@ app.directive('treeView',
                     scope.nivel++;
                 }
 
-                /* Controlando o maximo de niveis */
+                /*  maximo de niveis 0 é sem limites */
                 if (!scope.max){
                     scope.max = 0;
                 }
-                
+                scope.liberarNiveis = true;
+                if (scope.max > 0){
+                    scope.liberarNiveis = scope.nivel < scope.max;
+                }
+
+
                 scope.processando = true;                
                 scope.showItems = [];
 
@@ -31,32 +37,11 @@ app.directive('treeView',
                     var showHide = angular.element(hideThis).attr('class');
                     angular.element(hideThis).attr('class', (showHide === 'show' ? 'hide' : 'show'));
 
-                    if (showHide != 'show') {                        
-                        //scope.filhos = JSON.parse(hideThis.getAttribute("subnos"));
-                        //hideThis.innerHTML = renderTreeView(ulId, 2, max);
+                    if (showHide != 'show') {   
+                        scope.liberarNiveis = true;                     
                     }
                 }                
             
-
-                scope.retornarNodes = function () {
-
-                    var bloquear = this.max && this.max > 0;
-
-                    var nodes = [];
-   
-                    this.localNodes.forEach(node => {
-                      
-                        if (bloquear && this.nivel <= this.max){
-                            //node.children = [];                           
-                            nodes.push(node);
-                        }else{
-                            nodes.push(node);
-                        }
-                    });                     
-
-                    return nodes;
-                }
-
                 scope.showIcon = function (node) {
                     if (!angular.isUndefined(node.children)) return true;
                 }

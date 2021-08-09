@@ -1,5 +1,5 @@
 <ul class="tree-view-wrapper">    
-    <li ng-repeat="n in retornarNodes()">
+    <li ng-repeat="n in localNodes">
         <span>
             <span ng-show="showIcon(n)" class="show-hide" ng-click="showHide(n.id); n.open = !n.open;">
                 <i class="{{verClassesCSS(n)}}"> </i>
@@ -12,6 +12,6 @@
             </span>
             {{n.name}}
         </span>
-        <tree-view max="max" nivel="nivel" id="{{n.id}}" class="hide" checkbox click="myClick(node)" model="n.children"></tree-view>
+        <tree-view ng-if="n.children && liberarNiveis" max="max" nivel="nivel" id="{{n.id}}" class="hide" model="n.children"></tree-view>
     </li>
 </ul>

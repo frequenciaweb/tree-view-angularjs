@@ -38,7 +38,7 @@ app.controller("AppController",['$scope', ($scope) => {
  
       contadorGeral = 0;
       var niveis = 5;
-      var limiteItensPorNivel = 5;
+      var limiteItensPorNivel = 25;
       $scope.nodes = $scope.nivelFake(1, niveis, limiteItensPorNivel);
        
     }
