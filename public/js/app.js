@@ -1,6 +1,5 @@
 var app = angular.module('app',[]);
 
-
 app.controller("AppController",['$scope', ($scope) => {
   
     $scope.message = "Implementação Simples de uma Tree View com AngularJS";
@@ -18,9 +17,11 @@ app.controller("AppController",['$scope', ($scope) => {
         var listaNivel = [];
         if (nivel <= total){
             for (let a = 0; a <  random(1,limite); a++) {        
-                contador++;                
+                contador++;    
+                contadorGeral ++;            
                 var subNiveis = $scope.nivelFake(nivel +1, total, limite);
-                listaNivel.push({                  
+                listaNivel.push({    
+                    id: contadorGeral,              
                     name: `Item ${contador} Nivel ${nivel} `,
                     open: false,
                     checked: true,                                            
@@ -32,9 +33,9 @@ app.controller("AppController",['$scope', ($scope) => {
     }
 
     $scope.montarDadosFake = function(){
- 
+      contadorGeral = 0;
       var niveis = 5;
-      var limiteItensPorNivel = 45;
+      var limiteItensPorNivel = 3;
       $scope.nodes = $scope.nivelFake(1, niveis, limiteItensPorNivel);
        
     }
