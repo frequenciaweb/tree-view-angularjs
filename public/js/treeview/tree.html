@@ -3,15 +3,15 @@
         <span>
             <span ng-show="showIcon(n)" class="show-hide" ng-click="showHide(n.id); n.open = !n.open;">
                 <i class="{{verClassesCSS(n)}}"> </i>
-            </span>
+            </span>            
             <span ng-show="!showIcon(n)" style="padding-right: 13px"></span>
             <img ng-if="processando" width="60" src="public/js/treeview/loading.gif">
             <input ng-hide="processando" class="tree-checkbox" type="checkbox" ng-model="n.checked" ng-change="checkChange(n)" />
             <span class="edit">
-                <i transaction="{{n.transaction}}" class="fa {{n.transaction ? 'fa-file-o' : 'fa-folder'}}"></i>
+                <i class="fa {{!n.children || n.children.length == 0 ? 'fa-file-o' : 'fa-folder'}}"></i>
             </span>
             {{n.name}}
         </span>
-        <tree-view ng-if="n.children && liberarNiveis" max="max" nivel="nivel" id="{{n.id}}" class="hide" model="n.children"></tree-view>
+        <tree-view ng-if="n.children && liberarNiveis" id="{{n.id}}" max="max" nivel="nivel" class="hide" model="n.children"></tree-view>
     </li>
 </ul>

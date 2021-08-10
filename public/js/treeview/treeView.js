@@ -1,3 +1,4 @@
+var contador = 1;
 app.directive('treeView',
         ($compile) => ({
             restrict: 'E',
@@ -8,10 +9,14 @@ app.directive('treeView',
                 localClick: '&click',
                 max: '=?max',
                 nivel: '=?nivel',
-                liberarNiveis: "=?liberarNiveis"
+                liberarNiveis: "=?liberarNiveis"              
             },
             link(scope, tElement, tAttrs, transclude, ngModel) {
-
+                contador ++;
+                //tElement[0].setAttribute("id",`tree-view-${contador}`);
+                //console.log(tElement);
+                //console.log(tAttrs);
+                //scope.id = contador;
                 /* Controlando os níveis */
                 if (!scope.nivel){
                     scope.nivel = 1;
@@ -31,15 +36,20 @@ app.directive('treeView',
 
                 scope.processando = true;                
                 scope.showItems = [];
-
+            
                 scope.showHide = function (ulId) {
-                    var hideThis = document.getElementById(ulId);
-                    var showHide = angular.element(hideThis).attr('class');
-                    angular.element(hideThis).attr('class', (showHide === 'show' ? 'hide' : 'show'));
-
-                    if (showHide != 'show') {   
-                        scope.liberarNiveis = true;                     
-                    }
+                    scope.liberarNiveis = true;
+                    
+                    setTimeout(() => {
+                        var hideThis = document.getElementById(ulId);
+                        var showHide = angular.element(hideThis).attr('class');
+                        angular.element(hideThis).attr('class', (showHide === 'show' ? 'hide' : 'show'));
+                    }, 1);
+                    
+                    // if (showHide != 'show') {   
+                    //     scope.liberarNiveis = true;                     
+                    // }
+                                          
                 }                
             
                 scope.showIcon = function (node) {
@@ -51,7 +61,8 @@ app.directive('treeView',
                 }
 
                 scope.verClassesCSS = function (n) {
-                    if (n.transaction) {
+                    var fim = !n.children || n.children.length == 0;
+                    if (fim == true) {
                         return '';
                     } else {
                         if (n.open) {

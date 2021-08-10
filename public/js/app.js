@@ -3,14 +3,14 @@ var app = angular.module('app',[]);
 
 app.controller("AppController",['$scope', ($scope) => {
   
-    $scope.message = "Angular Rodando";
+    $scope.message = "Implementação Simples de uma Tree View com AngularJS";
     $scope.nodes = [];
 
      var contadorGeral = 0;
 
     var random = function obterArbitrarioAleatorio(min, max) {
         return Math.random() * (max - min) + min;
-      }
+    }
 
     $scope.nivelFake = function(nivel, total, limite)  {
         var contador = 0;
@@ -25,8 +25,7 @@ app.controller("AppController",['$scope', ($scope) => {
                     id: `N${contadorGeral}`,
                     name: `Item ${contador} Nivel ${nivel} `,
                     open: false,
-                    checked: true,                        
-                    transaction: subNiveis.length > 0 ? false : true,
+                    checked: true,                                            
                     children: subNiveis
                 });              
             }
