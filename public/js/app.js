@@ -18,11 +18,9 @@ app.controller("AppController",['$scope', ($scope) => {
         var listaNivel = [];
         if (nivel <= total){
             for (let a = 0; a <  random(1,limite); a++) {        
-                contador++;
-                contadorGeral ++;
+                contador++;                
                 var subNiveis = $scope.nivelFake(nivel +1, total, limite);
-                listaNivel.push({
-                    id: `N${contadorGeral}`,
+                listaNivel.push({                  
                     name: `Item ${contador} Nivel ${nivel} `,
                     open: false,
                     checked: true,                                            
@@ -35,9 +33,8 @@ app.controller("AppController",['$scope', ($scope) => {
 
     $scope.montarDadosFake = function(){
  
-      contadorGeral = 0;
       var niveis = 5;
-      var limiteItensPorNivel = 25;
+      var limiteItensPorNivel = 45;
       $scope.nodes = $scope.nivelFake(1, niveis, limiteItensPorNivel);
        
     }

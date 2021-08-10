@@ -1,7 +1,7 @@
 <ul class="tree-view-wrapper">    
-    <li ng-repeat="n in localNodes">
+    <li ng-repeat="n in getNodes()">                
         <span>
-            <span ng-show="showIcon(n)" class="show-hide" ng-click="showHide(n.id); n.open = !n.open;">
+            <span ng-show="showIcon(n)" class="show-hide" ng-click="showHide($index); n.open = !n.open;">
                 <i class="{{verClassesCSS(n)}}"> </i>
             </span>            
             <span ng-show="!showIcon(n)" style="padding-right: 13px"></span>
@@ -11,7 +11,7 @@
                 <i class="fa {{!n.children || n.children.length == 0 ? 'fa-file-o' : 'fa-folder'}}"></i>
             </span>
             {{n.name}}
-        </span>
-        <tree-view ng-if="n.children && liberarNiveis" id="{{n.id}}" max="max" nivel="nivel" class="hide" model="n.children"></tree-view>
+        </span>                      
+        <tree-view id="N{{nivel}}C{{$index}}I{{identity}}" ng-if="n.children && liberarNiveis" max="max" nivel="nivel" class="hide" model="n.children"></tree-view>
     </li>
 </ul>

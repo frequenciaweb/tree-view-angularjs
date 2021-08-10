@@ -1,4 +1,4 @@
-var contador = 1;
+var contador = 0;
 app.directive('treeView',
         ($compile) => ({
             restrict: 'E',
@@ -9,14 +9,16 @@ app.directive('treeView',
                 localClick: '&click',
                 max: '=?max',
                 nivel: '=?nivel',
-                liberarNiveis: "=?liberarNiveis"              
+                liberarNiveis: "=?liberarNiveis",
+                identity: "=?identity"
             },
-            link(scope, tElement, tAttrs, transclude, ngModel) {
+            link(scope, tElement, tAttrs, transclude, ngModel) {  
+                
                 contador ++;
-                //tElement[0].setAttribute("id",`tree-view-${contador}`);
-                //console.log(tElement);
-                //console.log(tAttrs);
-                //scope.id = contador;
+                scope.identity  = contador;                
+                if (!tAttrs.id){
+                    tElement[0].setAttribute("id",`N1C0`);                    
+                }
                 /* Controlando os níveis */
                 if (!scope.nivel){
                     scope.nivel = 1;
@@ -32,24 +34,28 @@ app.directive('treeView',
                 if (scope.max > 0){
                     scope.liberarNiveis = scope.nivel < scope.max;
                 }
-
-
+                
+                scope.identity = contador;
                 scope.processando = true;                
                 scope.showItems = [];
-            
+              
+                scope.getInc = function(){
+                    contador ++;
+                    console.log(contador);
+                    return contador;
+                   
+                }
+
                 scope.showHide = function (ulId) {
-                    scope.liberarNiveis = true;
-                    
-                    setTimeout(() => {
-                        var hideThis = document.getElementById(ulId);
-                        var showHide = angular.element(hideThis).attr('class');
-                        angular.element(hideThis).attr('class', (showHide === 'show' ? 'hide' : 'show'));
-                    }, 1);
-                    
-                    // if (showHide != 'show') {   
-                    //     scope.liberarNiveis = true;                     
-                    // }
-                                          
+                    scope.liberarNiveis = true;                    
+                    setTimeout(() => {                        
+                        var id = `N${scope.nivel+1}C${ulId}I${scope.identity}`;
+                        var hideThis = document.getElementById(id);
+                        if (hideThis){
+                            var showHide = angular.element(hideThis).attr('class');
+                            angular.element(hideThis).attr('class', (showHide === 'show' ? 'hide' : 'show'));                         
+                        }
+                    }, 250);
                 }                
             
                 scope.showIcon = function (node) {
@@ -71,6 +77,10 @@ app.directive('treeView',
                             return 'fa fa-plus-square-o';
                         }
                     }
+                }                
+
+                scope.getNodes = function(){                   
+                    return scope.localNodes;
                 }
 
                 function parentCheckChange(item) {
